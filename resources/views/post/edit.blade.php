@@ -2,6 +2,7 @@
 
 @section('title') edit @endsection
 @section('content')
+
 <form action="{{route('posts.update', $post['id'])}}" method="post">
     @csrf
     <div>

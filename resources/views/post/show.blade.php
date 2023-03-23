@@ -15,6 +15,8 @@
     </div>
 </div>
 
+
+
 <div class="card mt-6">
     <div class="card-header">
         Post Creator Info
@@ -24,5 +26,6 @@
         <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
     </div>
 </div>
+
 
 @endsection

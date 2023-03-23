@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
 use App\Models\User;
 
@@ -11,8 +12,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        //query to select all from posts
-        $posts = Post::paginate(5); 
+        $posts = Post::paginate(5);
         // $posts = Post::all();
         return view('post.index', ['posts' => $posts]);
     }
@@ -34,12 +34,16 @@ class PostController extends Controller
     {
         $post = Post::find($id);
         $users = User::all();
-
         return view('post.edit', ['post' => $post, 'users' => $users]);
     }
 
-    public function update($id)
+    public function update($id, Request $request)
     {
+        $request->validate([
+            'title' => ['required', 'unique:posts', 'min:3'],
+            'description' => ['required', 'min:10'],
+            'postCreator' => ['required', 'exists:users,id']
+        ]);
         $post = Post::find($id);
         $post->title = request()->title;
         $post->description = request()->description;
@@ -47,7 +51,7 @@ class PostController extends Controller
         $post->update();
         return to_route("posts.index");
     }
-    public function store(Request $request) //type hinting
+    public function store(StorePostRequest $request) //type hinting
     {
         $id = request()->id;
         $title = request()->title;
