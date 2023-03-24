@@ -9,6 +9,7 @@
     </div>
     <div class="card-body">
         <h5 class="card-title">Title: {{$post->title}}</h5>
+        <h5 class="card-title">Title: {{$post->slug}}</h5>
         <p class="card-text">Description: {{$post->description}}</p>
         <p class="card-text">Post Creator: {{$post->User->name}}</p>
         <p class="card-text">Created at: {{$post['created_at']}}</p>
