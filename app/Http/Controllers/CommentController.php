@@ -7,30 +7,26 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    // public function store(Request $request)
-    // {
-    //     $request->validate([
-    //         'body' => 'required',
-    //     ]);
-    //     $input = $request->all();
-    //     $input['user_id'] = auth()->user()->id;
-    //     Comment::create($input);
-    //     return back();
-    // }
-
-    // public function update(Request $request, $id)
-    // {
-    //     $comment = Comment::findO($id);
-    //     $comment->body = $request->body;
-    //     $comment->save();
-    //     return back();
-    // }
-
-
-    // public function destroy($id)
-    // {
-    //     $comment = Comment::findO($id);
-    //     $comment->delete();
-    //     return back();
-    // }
+    public function store(Request $request)
+    {
+        $comment = new Comment;
+        $comment->comment = $request->comment;
+        $comment->commentable_id = $request->commentable_id;
+        $comment->commentable_type = $request->commentable_type;
+        $comment->save();
+        return back();
+    }
+    public function update(Request $request, $id)
+    {
+        $comment = Comment::find($id);
+        $comment->comment = $request->comment;
+        $comment->save();
+        return back();
+    }
+    public function destroy($id)
+    {
+        $comment = Comment::find($id);
+        $comment->delete();
+        return back();
+    }
 }
