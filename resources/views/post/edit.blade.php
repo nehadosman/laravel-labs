@@ -3,8 +3,13 @@
 @section('title') edit @endsection
 @section('content')
 
-<form action="{{route('posts.update', $post['id'])}}" method="post">
+<form action="{{route('posts.update', $post['id'])}}" method="post" enctype="multipart/form-data">
     @csrf
+    {{ method_field('PUT') }}
+    <div>
+    <label for="title" class="form-label">Upload Image </label>
+        <input type="file" class="form-control" name="image" required>
+    </div>
     <div>
         <label for="title" class="form-label">Title</label>
         <input type="text" class="form-control" id="title" name="title" value="{{$post['title']}}">

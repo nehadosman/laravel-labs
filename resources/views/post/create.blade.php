@@ -15,7 +15,7 @@
     @csrf
     <div>
         <label for="title" class="form-label">Upload Image </label>
-        <input type="file" class="form-control" name="image">
+        <input type="file" class="form-control" name="image" required>
     </div>
 
     <div>
