@@ -5,14 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
 use App\Models\User;
-
+use App\Jobs\PruneOldPostsJob;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::paginate(5);
+        $posts = Post::paginate(10);
         // $posts = Post::all();
         return view('post.index', ['posts' => $posts]);
     }
@@ -57,14 +58,28 @@ class PostController extends Controller
         $title = request()->title;
         $description = request()->description;
         $postCreator = request()->postCreator;
+        $slug = Str::slug($title);
 
-        Post::create([
+        $file_extenstion = request()->file('image')->getClientOriginalExtension();
+        $file_name = time() . '.' . $file_extenstion;
+        $path = 'images';
+        $image = $request->image->move($path, $file_name);
+
+        $post = Post::create([
             'id' => $id,
             'title' => $title,
             'description' => $description,
             'user_id' => $postCreator,
+            'image_path' => $file_name,
+            'slug' => $slug
         ]);
-        // $data = $request->all();
+
+        // if ($request->hasFile('image')) {
+        //     $image = $request->file('image');
+        //     $path = $image->storeAs('public/images', $image->getClientOriginalName());
+        //     $post->image_path = $path;
+        // }
+        // // $data = $request->all();
         // return redirect()->route('posts.index');
         return to_route("posts.index");
     }
@@ -75,4 +90,10 @@ class PostController extends Controller
         $post->delete();
         return redirect()->route('posts.index');
     }
+
+    // public function pruneOldPosts()
+    // {
+    //     PruneOldPostsJob::dispatch();
+    //     return "Old posts pruning job dispatched!";
+    // }
 }

@@ -42,5 +42,5 @@
 
     </tbody>
 </table>
-
+{{ $posts->links('pagination::bootstrap-5') }}
 @endsection

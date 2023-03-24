@@ -1,5 +1,5 @@
 <?php
- 
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,6 +15,8 @@ class Post extends Model
         'title',
         'description',
         'user_id',
+        'slug',
+        'image_path'
     ];
     public function user()
     {
