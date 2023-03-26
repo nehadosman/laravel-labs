@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
-
-
+use Laravel\Socialite\Facades\Socialite;
+use App\Models\User;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,3 +38,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/auth/redirect', [PostController::class, 'redirectToGithub'])->name('githubLogin');
+Route::get('/auth/callback', [PostController::class, 'githubCallback']);
+
+Route::get('/auth/google/redirect', [PostController::class, 'redirectToGoogle'])->name('googleLogin');
+Route::get('/auth/google/callback', [PostController::class, 'googleCallback']);
